@@ -1,43 +1,41 @@
 package kodlama.io.eticaret.business.concretes;
 
 import kodlama.io.eticaret.business.abstracts.ProductService;
-import kodlama.io.eticaret.entities.concretes.Product;
-import kodlama.io.eticaret.repository.abstracts.ProductRepository;
+import kodlama.io.eticaret.entities.Product;
+import kodlama.io.eticaret.repository.ProductRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.converter.json.GsonBuilderUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
+@AllArgsConstructor
 public class ProductManager implements ProductService {
     private final ProductRepository repository;
 
-    @Autowired
-    public ProductManager(ProductRepository repository) {
-        this.repository = repository;
-    }
     @Override
     public List<Product> getAll() {
-        return repository.getAll();
+        return repository.findAll();
     }
     @Override
     public Product getById(int id) {
-       return repository.getById(id);
+       return repository.findById(id).orElseThrow();
     }
 
     @Override
     public Product add(Product product) {
         validateProduct(product);
-        return repository.add(product);
+        return repository.save(product);
     }
     @Override
     public Product update(int id, Product product) {
         validateProduct(product);
-        return repository.update(id, product);
+        product.setId(id);
+        return repository.save(product);
     }
     @Override
     public void delete(int id) {
-        repository.delete(id);
+        repository.deleteById(id);
     }
     private void validateProduct(Product product){
         checkPriceValid(product);
