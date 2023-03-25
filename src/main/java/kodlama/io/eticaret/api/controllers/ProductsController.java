@@ -1,7 +1,7 @@
 package kodlama.io.eticaret.api.controllers;
 
 import kodlama.io.eticaret.business.abstracts.ProductService;
-import kodlama.io.eticaret.entities.concretes.Product;
+import kodlama.io.eticaret.entities.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
